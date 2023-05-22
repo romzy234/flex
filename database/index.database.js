@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const connect = mongoose.connection;
+mongoose.set('strictQuery', true);
 /**
  * Mongod DB Connecter
  * @param {String} url Database Connection Url  example `mongodb://localhost:27017/` NOT REQURIED, If Not Specified it checked the ENV for `MONGO_URL`
- * 
  */
 const connectDB = async (url) => {
   connect.on('connected', async () => {
