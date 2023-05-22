@@ -8,8 +8,10 @@ const logger = require('morgan');
 const dotenv = require('dotenv');
 dotenv.config({ path: './env/.env' });
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index.routes');
+const authRouter = require('./routes/auth.routes');
+
+const errorHandler = require('./middleware/error.middleware');
 
 const app = express();
 
@@ -28,11 +30,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/auth', authRouter);
+
+app.use(errorHandler);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  next(createError(404));
+  res.status(404).json({
+    success: false,
+    status: 'Resource Not Found',
+    error: '404 Content Do Not Exist Or Has Been Deleted'
+  });
 });
 
 // error handler
