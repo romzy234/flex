@@ -15,7 +15,7 @@ const walletSchema = new mongoose.Schema(
 
     currency: {
       type: String,
-      default: 0
+      default: 'naira'
     },
 
     inflow: {

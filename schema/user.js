@@ -67,13 +67,13 @@ const userSchema = new mongoose.Schema(
       trim: true
     },
 
-    phone_number: {
+    phone: {
       type: String,
       required: [false, 'Please enter your Phone Number'],
       trim: false
     },
 
-    phone_number_country_code: {
+    country_code: {
       type: String,
       required: [false, 'Please enter your Phone Country Code'],
       trim: false
@@ -91,9 +91,15 @@ const userSchema = new mongoose.Schema(
       default: null
     },
 
-    Token: String,
+    device: {
+      type: String,
+      required: false,
+      default: null
+    },
+
+    Token: { type: String, select: false },
     TokenExpire: Number,
-    resetPasswordToken: String,
+    resetPasswordToken: { type: String, select: false },
     resetPasswordExpire: Number
   },
   {
@@ -112,8 +118,8 @@ userSchema.pre('save', async function (next) {
 });
 
 // Match user entered password to hashed password in database
-userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+userSchema.methods.matchPassword = function (enteredPassword) {
+  return bcrypt.compare(enteredPassword, this.password);
 };
 
 // Generate and hash password token
@@ -137,8 +143,7 @@ userSchema.methods.getResetPasswordToken = function () {
 userSchema.methods.getSignedJwtToken = function () {
   return jwt.sign(
     {
-      user_id: this._id,
-      type: 'lawyer'
+      user_id: this._id
     },
     process.env.JWT_SECRET
   );
