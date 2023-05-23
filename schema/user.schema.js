@@ -97,6 +97,11 @@ const userSchema = new mongoose.Schema(
       default: null
     },
 
+    bankname: String,
+    bankcode: String,
+    accountname: String,
+    accountnumber: String,
+
     Token: { type: String, select: false },
     TokenExpire: Number,
     resetPasswordToken: { type: String, select: false },
