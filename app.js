@@ -11,6 +11,7 @@ dotenv.config({ path: './env/.env' });
 const indexRouter = require('./routes/index.routes');
 const authRouter = require('./routes/auth.routes');
 const profileRouter = require('./routes/profile.routes');
+const bankRouter = require('./routes/bank.routes');
 
 const errorHandler = require('./middleware/error.middleware');
 
@@ -33,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
+app.use('/bank', bankRouter);
 
 app.use(errorHandler);
 
