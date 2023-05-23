@@ -73,6 +73,12 @@ const userSchema = new mongoose.Schema(
       trim: false
     },
 
+    pin: {
+      type: String,
+      required: [false, 'Pin Must Exist'],
+      default: null
+    },
+
     country_code: {
       type: String,
       required: [false, 'Please enter your Phone Country Code'],
@@ -125,6 +131,11 @@ userSchema.pre('save', async function (next) {
 // Match user entered password to hashed password in database
 userSchema.methods.matchPassword = function (enteredPassword) {
   return bcrypt.compare(enteredPassword, this.password);
+};
+
+// Match user entered password to hashed password in database
+userSchema.methods.matchTransactionPin = function (enteredPin) {
+  return bcrypt.compare(enteredPin, this.pin);
 };
 
 // Generate and hash password token
