@@ -18,6 +18,11 @@ const walletSchema = new mongoose.Schema(
       default: 'naira'
     },
 
+    locked: {
+      type: Boolean,
+      default: false
+    },
+
     inflow: {
       type: Number,
       default: 0
