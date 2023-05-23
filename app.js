@@ -13,6 +13,7 @@ const authRouter = require('./routes/auth.routes');
 const profileRouter = require('./routes/profile.routes');
 const bankRouter = require('./routes/bank.routes');
 const transactionRouter = require('./routes/transaction.routes');
+const notificationRouter = require('./routes/notification.routes');
 
 const errorHandler = require('./middleware/error.middleware');
 
@@ -37,6 +38,7 @@ app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
 app.use('/bank', bankRouter);
 app.use('/transaction', transactionRouter);
+app.use('/notification', notificationRouter);
 
 app.use(errorHandler);
 

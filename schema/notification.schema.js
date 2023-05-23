@@ -14,6 +14,19 @@ const notificationSchema = mongoose.Schema(
     message: {
       type: String,
       required: true
+    },
+    action: {
+      type: String,
+      required: false
+    },
+    target: {
+      type: String,
+      required: false
+    },
+    view: {
+      type: Boolean,
+      required: true,
+      default: false
     }
   },
   {
