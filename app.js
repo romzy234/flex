@@ -12,6 +12,7 @@ const indexRouter = require('./routes/index.routes');
 const authRouter = require('./routes/auth.routes');
 const profileRouter = require('./routes/profile.routes');
 const bankRouter = require('./routes/bank.routes');
+const pinRouter = require('./routes/pin.routes');
 const transactionRouter = require('./routes/transaction.routes');
 const notificationRouter = require('./routes/notification.routes');
 
@@ -38,6 +39,7 @@ app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
 app.use('/bank', bankRouter);
 app.use('/transaction', transactionRouter);
+app.use('/pin', pinRouter);
 app.use('/notification', notificationRouter);
 
 app.use(errorHandler);
