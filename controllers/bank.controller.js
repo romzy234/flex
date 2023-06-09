@@ -5,6 +5,7 @@ const asyncHandler = require('../middleware/async');
 const User = require('../schema/user.schema');
 const Wallet = require('../schema/wallet.schema');
 const History = require('../schema/history.schema');
+const { response } = require('express');
 // uuidv4();
 
 /**
@@ -462,4 +463,42 @@ exports.postUserBank = asyncHandler(async (req, res, next) => {
     status: 'success',
     data
   });
+});
+
+exports.PayStack = asyncHandler(async (req, res, next) => {
+  const payload = req.body;
+
+  const user = await User.findOne({ _id: payload.data.metadata.uid });
+
+  if (payload.event == 'charge.success') {
+    const trans = {
+      _user: user._id,
+      _wallet: user.wallet,
+      amount: payload.data.amount / 100,
+      status: 'Completed',
+      date: Date.now(),
+      from: 'Paystack',
+      initor: 'Deposit',
+      reference: payload.data.reference,
+      detail: 'Paystack',
+      bank: {
+        name: 'server'
+      }
+    };
+  }
+
+  let amount = payload.data.amount / 100;
+
+  await Wallet.findOneAndUpdate(
+    { _id: user._wallet },
+    {
+      $inc: { amount: 1 * amount },
+      $inc: { inflow: 1 * amount }
+    },
+    { new: true, runValidators: true }
+  );
+
+  await History.create(trans);
+
+  res.status(201).end();
 });

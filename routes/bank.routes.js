@@ -6,7 +6,8 @@ const {
   disburseToUserGlade,
   disburseToSaveUserGlade,
   userBank,
-  postUserBank
+  postUserBank,
+  PayStack
 } = require('../controllers/bank.controller');
 const { protect } = require('../guard/protect.guard');
 
@@ -17,5 +18,6 @@ router.post('/transfer', disburseToUserGlade);
 router.post('/withdraw', disburseToSaveUserGlade);
 router.get('/save', userBank);
 router.post('/save', postUserBank);
+router.post('/webhook/paystack/', PayStack);
 
 module.exports = router;
